@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from account.token import *
 from django.core.mail import send_mail, BadHeaderError
 from django.contrib.auth.forms import PasswordResetForm
 from django.db.models.query_utils import Q
@@ -26,40 +25,43 @@ from .token import account_activation_token
 
 
 
+from django.http import HttpResponseServerError
+
 def register_user(request):
     if request.method == 'POST':
         form = RegForm(request.POST)
         if form.is_valid():
-            print('the form')
+            print('valid entry')
             # Create a user object with the form data, but don't save it to the database yet
             user = form.save(commit=False)
             user.is_active = False
             user.save()
 
             # Ensure that the user object is not None before accessing attributes
-        
-            current_site = get_current_site(request)
-            mail_subject = 'Activate your account.'
-            message = render_to_string('account/activation_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
-            to_email = form.cleaned_data.get('email')
-            email = EmailMessage(
-                mail_subject, message, to=[to_email]
-            )
-            email.send()
-            return redirect('activation_sent')
+            if user is not None:
+                current_site = get_current_site(request)
+                mail_subject = 'Activate your account.'
+                message = render_to_string('account/activation_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+                })
+                to_email = form.cleaned_data.get('email')
+                email = EmailMessage(
+                    mail_subject, message, to=[to_email]
+                )
+                email.send()
+                return redirect('activation_sent')
+            else:
+                print('User is None. Form data may be invalid.')
+                print(form.errors)
         else:
-            # Handle the case where user or user.is_active is None
-            return render(request, 'error_template.html', {'error_message': 'User activation failed'})
-
+            print('Form is not valid.')
+            print(form.errors)
     else:
         form = RegForm()
     return render(request, 'forms/register.html', {'reg_form': form})
-
 
 
 

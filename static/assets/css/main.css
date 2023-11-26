@@ -1409,11 +1409,11 @@ a.mobile-show.search-bar-icon:hover {
   width: 18%;
   margin-top: -32px;
 }
-.site-logo {
+/* .site-logo {
   box-shadow: 0 4px 10px rgba(255, 255, 255, 0.981);
   box-sizing: border-box;
-  /* Add other styles for your logo if needed */
-}
+ 
+} */
 
 .hero-text {
   display: table;
@@ -2802,4 +2802,10 @@ table.order-details tbody td {
   display: table-cell;
   vertical-align: middle;
   width: 100%;
+}
+
+
+.form-search{
+  margin-top: 40px;
+ 
 }
