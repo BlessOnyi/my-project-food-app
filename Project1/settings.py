@@ -157,7 +157,10 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'onyinyechukwumblessing@gmail.com'
 
-EMAIL_HOST_PASSWORD = 'bluyqaukrsstazbh'
+EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
+
+LOGIN_URL = '/account/login/'
+# LOGIN_REDIRECT_URL = '/account/dashboard'
 
 #Basket session ID
 BASKET_SESSION_ID = 'basket'

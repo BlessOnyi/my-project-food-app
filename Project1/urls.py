@@ -25,7 +25,7 @@ urlpatterns = [
     path('', include('ProjectApp.urls',namespace='ProjectApp')),
     path('basket/',include('basket.urls', namespace='basket')),
     path('blogApp/', include('blogApp.urls')),
-    path('myPayment/', include("myPayment.urls")),
+    path('myPayment/', include('myPayment.urls', namespace='myPayment')),
     path('sent/', activation_sent_view, name="activation_sent"),
     path('activate/<slug:uidb64>/<slug:token>/', activate, name='activate'),
       path('account/', include("account.urls")),

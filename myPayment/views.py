@@ -50,7 +50,7 @@ def payment_completed(request):
     #         price=item['price'],
     #         quantity=item['qty']
     #     )
-    return JsonResponse('Payment completed!', safe=False)
+    return render(request, 'payment/payment.html')
 
 @login_required
 def payment_successful(request):

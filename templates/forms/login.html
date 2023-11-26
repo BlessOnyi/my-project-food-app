@@ -59,7 +59,7 @@
 
         <input type="submit" name="login" value="login" class="btn btn-danger btn-block btn_1 rounded full-width">
 
-        <div class="text-center add_top_10" style="color: rgb(22, 22, 27); font-weight: 900;">Do not have an account? <strong><a style="color:red;"href="{% url 'ProjectApp:register_user' %}">Register!</a></strong></div>
+        <div class="text-center add_top_10" style="color: rgb(22, 22, 27); font-weight: 900;">Do not have an account? <strong><a style="color:red;"href="{% url 'account:register_user' %}">Register!</a></strong></div>
     {% csrf_token %}
     </form>
     <br><br><br><br><br><br><br><br>

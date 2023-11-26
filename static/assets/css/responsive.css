@@ -548,6 +548,7 @@
 	}
 	.mobile-show {
 		display: block!important;
+		padding-top: 20%;
 	}
 	a.mobile-show.search-bar-icon {
 	    position: absolute;

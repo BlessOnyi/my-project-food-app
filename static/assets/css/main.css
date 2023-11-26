@@ -2809,3 +2809,22 @@ table.order-details tbody td {
   margin-top: 40px;
  
 }
+
+.desk-show{
+  display: block;
+}
+
+.mobile{
+  display: none !important;
+}
+
+@media only screen and (max-width:800px) {
+  .desk-show{
+    display: none !important;
+  }
+
+  .mobile{
+    display: block !important;
+
+  }
+}

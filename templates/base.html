@@ -74,23 +74,21 @@
 		</div>
 	</div>
 	<!--PreLoader Ends-->
+	<div id="sticker-sticky-wrapper" class="sticky-wrapper" style="height: 105px;"><div class="top-header-area" id="sticker" style="width: 1349px;">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-sm-12 text-center">
+					<div class="main-menu-wrap">
+						<!-- logo -->
+						<div class="site-logo">
+							<a href="{% url 'ProjectApp:myHome' %}">
+								<h3 style="color: #F28123;">BleNourishNet</h3>
+							</a>
+						</div>
+						<!-- logo -->
 
-	<!-- header -->
-	<div class="top-header-area" id="sticker">
-		<div class="row">
-			<div class="col-lg-12 col-sm-12 text-center">
-				<div class="main-menu-wrap">
-					<!-- logo -->
-					<div class="site-logo">
-						<a href="{% url 'ProjectApp:myHome' %}">
-							<h3 style="color: #F28123;">BleNourishNet</h3>
-						</a>
-					</div>
-					<!-- logo -->
-
-					<!-- menu start -->
-					<nav class="main-menu">
-						<div>
+						<!-- menu start -->
+						<nav class="main-menu" style="display: block;">
 							<ul>
 								<li class="current-list-item"><a href="{% url 'ProjectApp:myHome' %}">Home</a></li>
 
@@ -98,12 +96,8 @@
 
 								<li><a href="contact.html">Contact</a></li>
 
-								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="menu.html" id="navbarDropdown"
-										role="button" data-bs-toggle="dropdown" aria-expanded="false">
-										Menu
-									</a>
-									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li><a href="#">Menu</a>
+									<ul class="sub-menu" aria-labelledby="navbarDropdown">
 										<li><a class="dropdown-item category-link" href="">All</a></li>
 										{% for category in categories %}
 										<li>
@@ -113,14 +107,8 @@
 										{% endfor %}
 									</ul>
 								</li>
-
-								<li class="nav-item dropdown">
-
-									<a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button"
-										data-bs-toggle="dropdown" aria-expanded="false">
-										<i class="fa fa-user " aria-hidden="true"></i>Account
-									</a>
-									<ul class="dropdown-menu">
+								<li><a href=""><i class="fa fa-user"></i>Account</a>
+									<ul class="sub-menu">
 										<li><a href="{% url 'account:login' %}"><button class="btn btn-secondary"
 													type="button">Sign In</button></a></li>
 										<li><a class="dropdown-item category-link"
@@ -128,13 +116,12 @@
 										<li><a class="dropdown-item category-link" href="#">My Order</a></li>
 									</ul>
 								</li>
-
-								<li class="nav-item">
-									<a class="nav-link" type="button" role="button"
-										href="{% url 'basket:basket_summary' %} "
+								
+								<li>
+									<div class="header-icons d-flex " style="margin-top: -25px;">
+										<a class="shopping-cart" type="button" role="button" href="{% url 'basket:basket_summary' %} "
 										class="btn btn-outline-secondary border-0 basket-btn">
 										<!-- <div class="d-inline-flex">0</div> -->
-
 										{% with total_qty=basket|length %}
 										<div id="basket-qty" class="d-inline-flex">
 											{% if total_qty > 0 %}
@@ -153,27 +140,35 @@
 										</div>
 
 									</a>
-
+										<!-- <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a> -->
+										<form class="d-flex form-search desk-show" role="search">
+											<input class="form-control  me-2" type="search" placeholder="Search food"
+												aria-label="Search" name="searched">
+											<button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
+												<i class="fas fa-search"></i>
+											</button>
+										</form> 
+									</div>
 								</li>
 							</ul>
-							<form class="d-flex form-search" role="search">
-								<input class="form-control  me-2" type="search" placeholder="Search food"
-									aria-label="Search" name="searched">
-								<button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
-									<i class="fas fa-search"></i>
-								</button>
-							</form> 
-							
-						</div> 
-					</nav>
-					<!-- <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a> -->
-					<div class="mobile-menu"></div>
-					<!-- menu end -->
+						</nav>
+						<!-- <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a> -->
+						<form class="d-flex form-search mobile-show mobile " role="search">
+							<input class="form-control  me-2" type="search" placeholder="Search food"
+								aria-label="Search" name="searched">
+							<button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
+								<i class="fas fa-search"></i>
+							</button>
+						</form> 
+						<div class="mobile-menu"></div>
+						<!-- menu end -->
+					</div>
 				</div>
 			</div>
 		</div>
-
-	</div>
+	</div></div>
+	<!-- header -->
+	
 	<!-- end header -->
 
 	<!-- search area -->
@@ -183,7 +178,6 @@
 
 
 	{% endblock %}
-
 
 	<!-- footer -->
 	<div class="footer-area">
