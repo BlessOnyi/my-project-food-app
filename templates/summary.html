@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Basket Summary{% endblock %}
+{% block content %}
+
+
+<div class="hero-area hero-img2">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-9 offset-lg-2 text-center">
+				<div class="hero-text">
+					<div class="hero-text-tablecell">
+						<p class="subtitle">Fresh & Tasty</p>
+						<h4 class="mt-5 text-light">Order and make payments</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<section class="h-100 gradient-custom">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center my-4">
+
+            {% if basket|length == 0 %}
+            <div class="col-md-6">
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p><strong>Your basket is empty</strong></p>
+                        <a href="{% url 'ProjectApp:myHome' %}">Continue Shopping</a>
+
+                    </div>
+                </div>
+
+            </div>
+            {% else %}
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h5 class="mb-0">Basket Summary</h5>
+                    </div>
+                    {% for item in basket %}
+                    {% with product=item.product %}
+                    <div class="card-body product-item" data-index="{{product.id}}">
+                        <!-- Single item -->
+                        <div class="row">
+
+                            <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                                <!-- Image -->
+                                <div class="bg-image hover-overlay hover-zoom ripple rounded"
+                                    data-mdb-ripple-color="light">
+
+                                    <img src="{{ product.image.url }}" class="w-100" alt="{{product.title}}" />
+                                    <a href="#!">
+                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)">
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Image -->
+                            </div>
+
+                            <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                <!-- Data -->
+                                <p><strong>{{product.title}}</strong></p>
+
+                                <button type="button" id="update-button" data-index="{{product.id}}"
+                                    class="update-button text-decoration-none small ps-3 btn btn-success">Update</button>
+
+
+                                <button type="button" id="delete-button" data-index="{{product.id}}"
+                                    class="delete-button text-decoration-none small btn btn-danger">Delete</button>
+                                <!-- Data -->
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                <!-- Quantity -->
+                                <div class="">
+                                    <select id="select{{product.id}}" class="form-select w-50"
+                                        aria-label="Default select example">
+                                        <option value="" selected disabled hidden>{{item.qty}}</option>
+
+                                        <option value="">1</option>
+                                        <option value="">2</option>
+                                        <option value="">3</option>
+                                        <option value="">4</option>
+                                        <option value="">5</option>
+
+                                    </select>
+
+                                </div>
+                                <!-- Quantity -->
+
+                                <!-- Price -->
+                                <p class="text-start text-md-center">
+                                    <strong>&#8358; {{product.price}}</strong>
+                                </p>
+                                <!-- Price -->
+                            </div>
+
+                        </div>
+                        <!-- Single item -->
+
+                        <hr class="my-4" />
+
+
+                    </div>
+                    {% endwith %}
+                    {% endfor %}
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p><strong>Expected shipping delivery</strong></p>
+                        <p class="mb-0">3 hours after order has been placed</p>
+                    </div>
+                </div>
+                <div class="card mb-4 mb-lg-0">
+                    <div class="card-body">
+                        <p><strong>We accept</strong></p>
+                        <img class="me-2" width="45px"
+                            src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+                            alt="Visa" />
+                        <img class="me-2" width="45px"
+                            src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+                            alt="American Express" />
+                        <img class="me-2" width="45px"
+                            src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+                            alt="Mastercard" />
+
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h5 class="mb-0">Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li
+                                class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                Products
+                                <span id="subtotal">&#8358; {{basket.get_subtotal_price}}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                Shipping
+                                <span>&#8358; 0</span>
+                            </li>
+                            <li
+                                class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                <div>
+                                    <strong>Total amount</strong>
+                                    <strong>
+                                        <p class="mb-0">(including VAT)</p>
+                                    </strong>
+                                </div>
+                                <span id="total"><strong>&#8358; {{basket.get_total_price}}</strong></span>
+                            </li>
+                        </ul>
+                        {% if basket|length == 0 %}
+                        <button type="button" disabled class="btn btn-primary btn-lg btn-block">
+                            Checkout securely
+                        </button>
+                        {% else %}
+                        <a href="{% url 'myPayment:payment_completed' %}" class="primary-btn">
+                        <button type="button " class="btn btn-primary btn-lg btn-block">
+                            Checkout securely
+                        </button>
+                         </a>
+                        {% endif %}
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Delete Item
+    $(document).on('click', '.delete-button', function (e) {
+        e.preventDefault();
+        var prodid = $(this).data('index');
+        $.ajax({
+            type: 'POST',
+            url: '{% url "basket:basket_delete" %}',
+            data: {
+                productid: $(this).data('index'),
+                csrfmiddlewaretoken: "{{csrf_token}}",
+                action: 'post'
+            },
+            success: function (json) {
+                $('.product-item[data-index="' + prodid + '"]').remove();
+                document.getElementById("subtotal").innerHTML = json.subtotal;
+                document.getElementById("basket-qty").innerHTML = json.qty
+            },
+            error: function (xhr, errmsg, err) { }
+        });
+    })
+
+    // Update Item
+    $(document).on('click', '.update-button', function (e) {
+        e.preventDefault();
+        var prodid = $(this).data('index');
+        $.ajax({
+            type: 'POST',
+            url: '{% url "basket:basket_update" %}',
+            data: {
+                productid: $(this).data('index'),
+                productqty: $('#select' + prodid + ' option:selected').text(),
+                csrfmiddlewaretoken: "{{csrf_token}}",
+                action: 'post'
+            },
+            success: function (json) {
+                document.getElementById("basket-qty").innerHTML = json.qty
+                document.getElementById("subtotal").innerHTML = json.subtotal
+            },
+            error: function (xhr, errmsg, err) { }
+        });
+    })
+</script>
+
+{% endblock %}

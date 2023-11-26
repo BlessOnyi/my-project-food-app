@@ -1,0 +1,35 @@
+{% extends "frontend/base.html" %}
+{% load static %}
+{% block title %}
+
+Blenutishnet | Payment Successful
+
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="col-12 categories__text">
+      <h1 class="h2">Payment Successful</h1>
+    </div>
+   
+  </div>
+  {{request.user.first_name}} you order {{product.title}}
+  {% if products.count == 1 %}
+<p>Thank you for your purchase of {{user.first_name }} {{ product.title }}!</p>
+{% else %}
+<p>Thank you for your purchase of:</p>
+<ul>
+{% for product in products %}
+<li>{{ product.title }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+<p>An email has been sent to {{ request.user.email }} with details of your purchase.</p>
+<div class="row">
+  <div class="col-lg-6 col-md-6 col-sm-6">
+      <div class="cart__btn">
+          <!-- <a href="{% url 'frontend:product_all' %}">Continue Shopping</a> -->
+      </div>
+  </div>
+ 
+</div>
+{% endblock %}

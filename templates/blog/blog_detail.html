@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Blog details{% endblock %}
+{% block content %}
+
+
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        background-color: #fdfdfd;
+    }
+
+    .head_text {
+        color: white;
+    }
+
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+</style>
+<!-- hero area -->
+<div class="hero-area hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-9 offset-lg-2 text-center">
+				<div class="hero-text">
+					<div class="hero-text-tablecell">
+						<p class="subtitle">Fresh & Tasty</p>
+						<h2 class="text-light">Delicious Seasoned Dishes</h2>
+						<div class="hero-btns">
+							<a href="menu.html" class="boxed-btn">Food Collection</a>
+							<a href="contact.html" class="bordered-btn">Contact Us</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end hero area -->
+
+
+<header class="masthead">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h3 class=" site-heading my-4 mt-3 text-white"> Welcome to my awesome food Mode Chronicles </h3>
+                    <p class="text-light">We Love food as much as you do..! &nbsp
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <!-- Blog Entries Column -->
+        <div class="col-md-8 mt-3 left">
+            {% if blogDetail %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                         <h2 class="card-title">{{blogDetail.title}}</h2>
+                         <p class="card-text text-muted h6">{{ blogDetail.author }} | {{ blogDetail.created_on}} </p>
+                         <div class="d-flex">
+                            <img src="{{blogDetail.image.url}}" width="300" alt="">
+                            <p class="card-text p-2">{{blogDetail.content}}</p>
+                          
+                         </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    
+    </div>
+</div>
+{%endblock%}
