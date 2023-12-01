@@ -1,0 +1,64 @@
+{% extends 'dashboard/account_base.html' %}
+{% load static %}
+{% block title %} Edit Profile
+{% endblock %}
+{% block content %}
+
+
+<div class="main-panel">
+    <div class="content-wrapper">
+     >
+      <div class="row">
+        <div class="col-12 grid-margin stretch-card">
+          <div class="card">
+  
+            <div class="card-body">
+              <h3 class="card-title">Change Password</h3>
+              {% if messages %}
+              {% for mes in messages %}
+              <div class="alert {{ mes.tags }}">{{ mes }}</div>
+              {% endfor %}
+              {% endif %}
+              <form action="#" class="forms-sample" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="exampleInputName1">Username</label>
+                  {{edit_key.username}}
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputName1">First name</label>
+                  {{edit_key.first_name}}
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputName1">Last name</label>
+                  {{edit_key.last_name}}
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputName1">Email</label>
+                  {{edit_key.email}}
+                </div>
+                <button type="submit" class="btn btn-primary mr-2">Edit</button>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- content-wrapper ends -->
+    <!-- partial:../../partials/_footer.html -->
+    <footer class="footer">
+      <div class="footer-inner-wraper">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+          <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com
+            2020</span>
+          <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a
+              href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard templates</a> from
+            Bootstrapdash.com</span>
+        </div>
+      </div>
+    </footer>
+    <!-- partial -->
+  </div>
+
+{% endblock %}

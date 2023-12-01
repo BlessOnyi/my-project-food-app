@@ -10,7 +10,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.forms import PasswordChangeForm
+from ProjectApp.forms import *
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -95,7 +95,55 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect('ProjectApp:myHome')
+            return redirect('account:dashboard_account')
         else:
             messages.error(request, 'Username and Password do not match')
     return render(request, 'forms/login.html')
+
+
+def dashboard_account(request):
+    
+    return render (request,'dashboard/index.html' )
+
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('ProjectApp:myHome')
+
+def basic(request):
+    return render(request, 'dashboard/basic_elements.html')
+
+
+
+@login_required
+def change_form(request):
+    if request.method == 'POST':
+        change_form = PasswordChangeForm(data=request.POST,user=request.user)
+        if change_form.is_valid():
+            change_form.save()
+            update_session_auth_hash(request, change_form.user)
+            messages.success(request, 'password changed succesfully')
+    else:
+        change_form=PasswordChangeForm(user=request.user)
+    return render(request, 'dashboard/changepassword.html', {'pass_key':change_form})
+
+
+
+@login_required(login_url='/dashboard/')
+def user_profile(request):
+    # my_user = User.objects.filter(user=request.user)
+    return render(request, 'dashboard/user-profile.html', {'profile':request.user})
+
+
+@login_required(login_url='/dashboard/')
+def edit_form(request):
+    if request.method == 'POST':
+        edit_form = EditUserForm(request.POST, instance=request.user)
+        if edit_form.is_valid():
+            edit_form.save()
+            messages.success(request, 'User edited successfully.')
+    else:
+        edit_form = EditUserForm(instance=request.user)
+    return render(request, 'dashboard/edit-user-profile.html', {'edit_key':edit_form})
+

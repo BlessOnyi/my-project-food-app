@@ -16,8 +16,6 @@ from django.contrib.auth import login, logout, authenticate
 
 # Create your views here.
 
-
-
 def myHome(request):
  
     products = Products.objects.all()
@@ -33,10 +31,10 @@ def myHome(request):
         return products
     elif searched:
         products = Products.objects.filter(title__icontains=searched)
-        # multiple_search = Q(Q(title__icontains=searched) | Q(description__icontains=searched))
-        # products = Products.objects.filter(multiple_search)
+       
     return render (request, 'index.html', {'products':products,'categories':categories})
-    
+
+
 
 
 def product_detail(request, slug):
@@ -50,29 +48,6 @@ def category_list(request, category_slug):
 
 
 
-
-@login_required
-def pass_form(request):
-    if request.method == 'POST':
-        pass_form = PasswordChangeForm(data=request.POST,user=request.user)
-        if pass_form.is_valid():
-            pass_form.save()
-            update_session_auth_hash(request, pass_form.user)
-            messages.success(request, 'password changed succesfully')
-    else:
-        pass_form=PasswordChangeForm(user=request.user)
-    return render(request, 'change-password.html', {'pass_key':pass_form})
-
-# def about(request):
-#     return render (request, 'about.html')
-
-# def menu(request):
-#     return render (request, 'menu.html')
-
-# def booking(request):
-#     return render (request, 'book.html')
-
-
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     template_name = 'forms/password_reset.html'
     email_template_name = 'forms/password_reset_email.html'
@@ -81,4 +56,10 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
                       "if an account exists with the email you entered. You should receive them shortly." \
                       " If you don't receive an email, " \
                       "please make sure you've entered the address you registered with, and check your spam folder."
-    success_url = reverse_lazy('ProjectApp:login')
+    success_url = reverse_lazy('account:login')
+
+
+
+# class PasswordResetConfirmView():
+   
+#    success_url = reverse_lazy("ProjectApp:password_reset_complete")

@@ -70,7 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                 'ProjectApp.context_processors.categories',
+                'ProjectApp.context_processors.categories',
                 'basket.context_processors.basket',
 
             ],

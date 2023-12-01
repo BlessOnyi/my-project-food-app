@@ -28,7 +28,7 @@ urlpatterns = [
     path('myPayment/', include('myPayment.urls', namespace='myPayment')),
     path('sent/', activation_sent_view, name="activation_sent"),
     path('activate/<slug:uidb64>/<slug:token>/', activate, name='activate'),
-      path('account/', include("account.urls")),
+    path('account/', include("account.urls")),
 ]
 
 if settings.DEBUG:
