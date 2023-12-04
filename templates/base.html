@@ -74,101 +74,175 @@
 		</div>
 	</div>
 	<!--PreLoader Ends-->
-	<div id="sticker-sticky-wrapper" class="sticky-wrapper" style="height: 105px;"><div class="top-header-area" id="sticker" style="width: 1349px;">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 col-sm-12 text-center">
-					<div class="main-menu-wrap">
-						<!-- logo -->
-						<div class="site-logo">
-							<a href="{% url 'ProjectApp:myHome' %}">
-								<h3 style="color: #F28123;">BleNourishNet</h3>
-							</a>
+	<div id="sticker-sticky-wrapper" class="sticky-wrapper" style="height: 105px;">
+		<div class="top-header-area" id="sticker" style="width: 1349px;">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 col-sm-12 text-center">
+						<div class="main-menu-wrap">
+							<!-- logo -->
+							<div class="site-logo">
+								<a href="{% url 'ProjectApp:myHome' %}">
+									<h3 style="color: #F28123;">BleNourishNet</h3>
+								</a>
+							</div>
+							<!-- logo -->
+
+							<!-- menu start -->
+							<nav class="main-menu" style="display: block;">
+								{% if user.is_authenticated %}
+								<ul>
+									<li class="current-list-item"><a href="{% url 'ProjectApp:myHome' %}">Home</a></li>
+
+									<li><a href="{% url 'blogApp:blogApp' %}">Blog</a></li>
+
+									<li><a href="contact.html">Contact</a></li>
+
+									<li><a href="#">Menu</a>
+										<ul class="sub-menu" aria-labelledby="navbarDropdown">
+											<li><a class="dropdown-item category-link" href="all">All</a></li>
+											{% for category in categories %}
+											<li>
+												<a class="dropdown-item category-link"
+													href="{% url 'ProjectApp:category_list' category.slug %}">{{category.name}}</a>
+											</li>
+											{% endfor %}
+										</ul>
+									</li>
+									<li><a href=""><i class="fa fa-user"></i>Account</a>
+										<ul class="sub-menu">
+											<li><a href="{% url 'account:dashboard_account' %}"><button
+														class="btn btn-secondary" type="button">Dashboard</button></a>
+											</li>
+											<li> <a class="dropdown-item py-1 d-flex align-items-center justify-content-between"
+													data-bs-toggle="modal" data-bs-target="#exampleModal">
+													<span>Log Out</span>
+													<i class="mdi mdi-logout ml-1"></i>
+												</a></li>
+
+										</ul>
+									</li>
+
+									<li>
+										<div class="header-icons d-flex " style="margin-top: -25px;">
+											<a class="shopping-cart" type="button" role="button"
+												href="{% url 'basket:basket_summary' %} "
+												class="btn btn-outline-secondary border-0 basket-btn">
+												<!-- <div class="d-inline-flex">0</div> -->
+												{% with total_qty=basket|length %}
+												<div id="basket-qty" class="d-inline-flex">
+													{% if total_qty > 0 %}
+													{{ total_qty }}
+													{% else %}
+
+													{% endif %}
+												</div>
+												{% endwith %}
+												<div>
+													<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+														fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+														<path
+															d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+													</svg>
+												</div>
+
+											</a>
+											<!-- <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a> -->
+											<form class="d-flex form-search desk-show" role="search">
+												<input class="form-control  me-2" type="search"
+													placeholder="Search food" aria-label="Search" name="searched">
+												<button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
+													<i class="fas fa-search"></i>
+												</button>
+											</form>
+										</div>
+									</li>
+								</ul>
+								{% else %}
+								<ul>
+									<li class="current-list-item"><a href="{% url 'ProjectApp:myHome' %}">Home</a></li>
+
+									<li><a href="{% url 'blogApp:blogApp' %}">Blog</a></li>
+
+									<li><a href="contact.html">Contact</a></li>
+
+									<li><a href="#">Menu</a>
+										<ul class="sub-menu" aria-labelledby="navbarDropdown">
+											<li><a class="dropdown-item category-link" href="all">All</a></li>
+											{% for category in categories %}
+											<li>
+												<a class="dropdown-item category-link"
+													href="{% url 'ProjectApp:category_list' category.slug %}">{{category.name}}</a>
+											</li>
+											{% endfor %}
+										</ul>
+									</li>
+									<li><a href=""><i class="fa fa-user"></i>Account</a>
+										<ul class="sub-menu">
+											<li><a href="{% url 'account:login' %}"><button class="btn btn-secondary"
+														type="button">Sign In</button></a></li>
+											<li><a class="dropdown-item category-link"
+													href="{% url 'account:register_user' %}">Register Account</a></li>
+											<li><a class="dropdown-item category-link" href="#">My Order</a></li>
+										</ul>
+									</li>
+
+									<li>
+										<div class="header-icons d-flex " style="margin-top: -25px;">
+											<a class="shopping-cart" type="button" role="button"
+												href="{% url 'basket:basket_summary' %} "
+												class="btn btn-outline-secondary border-0 basket-btn">
+												<!-- <div class="d-inline-flex">0</div> -->
+												{% with total_qty=basket|length %}
+												<div id="basket-qty" class="d-inline-flex">
+													{% if total_qty > 0 %}
+													{{ total_qty }}
+													{% else %}
+
+													{% endif %}
+												</div>
+												{% endwith %}
+												<div>
+													<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+														fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+														<path
+															d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+													</svg>
+												</div>
+
+											</a>
+											<!-- <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a> -->
+											<form class="d-flex form-search desk-show" role="search">
+												<input class="form-control  me-2" type="search"
+													placeholder="Search food" aria-label="Search" name="searched">
+												<button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
+													<i class="fas fa-search"></i>
+												</button>
+											</form>
+										</div>
+									</li>
+								</ul>
+								{% endif %}
+							</nav>
+
+							<!-- <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a> -->
+							<form class="d-flex form-search mobile-show mobile " role="search">
+								<input class="form-control  me-2" type="search" placeholder="Search food"
+									aria-label="Search" name="searched">
+								<button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
+									<i class="fas fa-search"></i>
+								</button>
+							</form>
+							<div class="mobile-menu"></div>
+							<!-- menu end -->
 						</div>
-						<!-- logo -->
-
-						<!-- menu start -->
-						<nav class="main-menu" style="display: block;">
-							<ul>
-								<li class="current-list-item"><a href="{% url 'ProjectApp:myHome' %}">Home</a></li>
-
-								<li><a href="{% url 'blogApp:blogApp' %}">Blog</a></li>
-
-								<li><a href="contact.html">Contact</a></li>
-
-								<li><a href="#">Menu</a>
-									<ul class="sub-menu" aria-labelledby="navbarDropdown">
-										<li><a class="dropdown-item category-link" href="all">All</a></li>
-										{% for category in categories %}
-										<li>
-											<a class="dropdown-item category-link"
-												href="{% url 'ProjectApp:category_list' category.slug %}">{{category.name}}</a>
-										</li>
-										{% endfor %}
-									</ul>
-								</li>
-								<li><a href=""><i class="fa fa-user"></i>Account</a>
-									<ul class="sub-menu">
-										<li><a href="{% url 'account:login' %}"><button class="btn btn-secondary"
-													type="button">Sign In</button></a></li>
-										<li><a class="dropdown-item category-link"
-												href="{% url 'account:register_user' %}">Register Account</a></li>
-										<li><a class="dropdown-item category-link" href="#">My Order</a></li>
-									</ul>
-								</li>
-								
-								<li>
-									<div class="header-icons d-flex " style="margin-top: -25px;">
-										<a class="shopping-cart" type="button" role="button" href="{% url 'basket:basket_summary' %} "
-										class="btn btn-outline-secondary border-0 basket-btn">
-										<!-- <div class="d-inline-flex">0</div> -->
-										{% with total_qty=basket|length %}
-										<div id="basket-qty" class="d-inline-flex">
-											{% if total_qty > 0 %}
-											{{ total_qty }}
-											{% else %}
-
-											{% endif %}
-										</div>
-										{% endwith %}
-										<div>
-											<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-												fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
-												<path
-													d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-											</svg>
-										</div>
-
-									</a>
-										<!-- <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a> -->
-										<form class="d-flex form-search desk-show" role="search">
-											<input class="form-control  me-2" type="search" placeholder="Search food"
-												aria-label="Search" name="searched">
-											<button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
-												<i class="fas fa-search"></i>
-											</button>
-										</form> 
-									</div>
-								</li>
-							</ul>
-						</nav>
-						<!-- <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a> -->
-						<form class="d-flex form-search mobile-show mobile " role="search">
-							<input class="form-control  me-2" type="search" placeholder="Search food"
-								aria-label="Search" name="searched">
-							<button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
-								<i class="fas fa-search"></i>
-							</button>
-						</form> 
-						<div class="mobile-menu"></div>
-						<!-- menu end -->
 					</div>
 				</div>
 			</div>
 		</div>
-	</div></div>
+	</div>
 	<!-- header -->
-	
+
 	<!-- end header -->
 
 	<!-- search area -->
@@ -187,8 +261,10 @@
 					<div class="footer-box about-widget">
 						<h2 class="widget-title">About us</h2>
 						<p>"BleNourishNet" is a platform that promotes
-							sustainable and ethical food practices while supporting local businesses. Whether you're a vendor
-							looking to reach a wider audience or a consumer wanting to make eco-conscious food choices, this
+							sustainable and ethical food practices while supporting local businesses. Whether you're a
+							vendor
+							looking to reach a wider audience or a consumer wanting to make eco-conscious food choices,
+							this
 							app
 							is your gateway to a more sustainable food nurishment and niche.</p>
 					</div>
@@ -251,7 +327,26 @@
 				</div>
 			</div>
 		</div>
-	</div>S
+	</div>
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+		 <p class="text-dark">Do you want to logout, {{user.first_name}} </p>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		 <a href="{% url 'account:logout_view' %}"><button type="button" class="btn btn-primary">logout</button></a> 
+		</div>
+	  </div>
+	</div>
+  </div>
 	<!-- end copyright -->
 
 	<!-- jquery -->

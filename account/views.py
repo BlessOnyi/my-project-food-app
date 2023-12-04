@@ -109,14 +109,14 @@ def dashboard_account(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('ProjectApp:myHome')
+    return redirect('account:login')
 
 def basic(request):
     return render(request, 'dashboard/basic_elements.html')
 
 
 
-@login_required
+@login_required(login_url='/account/login/')
 def change_form(request):
     if request.method == 'POST':
         change_form = PasswordChangeForm(data=request.POST,user=request.user)
@@ -130,13 +130,13 @@ def change_form(request):
 
 
 
-@login_required(login_url='/dashboard/')
+@login_required(login_url='/account/login/')
 def user_profile(request):
     # my_user = User.objects.filter(user=request.user)
     return render(request, 'dashboard/user-profile.html', {'profile':request.user})
 
 
-@login_required(login_url='/dashboard/')
+@login_required(login_url='/account/login/')
 def edit_form(request):
     if request.method == 'POST':
         edit_form = EditUserForm(request.POST, instance=request.user)

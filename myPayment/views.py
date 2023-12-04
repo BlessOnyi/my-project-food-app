@@ -11,13 +11,13 @@ from django.http import HttpResponseRedirect, JsonResponse
 from orders.models import *
 import json
 
-@login_required
+@login_required(login_url='/account/login/')
 def payment_completed(request):
     # Get the reference from the request body
     reference = request.POST.get('reference')
 
     # Verify the transaction with Paystack
-    headers = {'Authorization': 'Bearer {{ sk_test_b437a50bcfe02ae4d9b33baac55f90bae488b92b }}'}
+    headers = {'Authorization': 'Bearer {{sk_test_efea5c7d713b390d867c1d6bd4575b7160a72184 }}'}
     response = requests.get('https://api.paystack.co/transaction/verify/' , reference, headers=headers)
 
     # Get the transaction data from the response
@@ -52,7 +52,7 @@ def payment_completed(request):
     #     )
     return render(request, 'payment/payment.html')
 
-@login_required
+@login_required(login_url='/account/login/')
 def payment_successful(request):
     basket = Basket(request)
     basket.clear()

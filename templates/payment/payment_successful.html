@@ -1,4 +1,4 @@
-{% extends "frontend/base.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% block title %}
 
@@ -6,6 +6,21 @@ Blenutishnet | Payment Successful
 
 {% endblock %}
 {% block content %}
+<div class="hero-area hero-img2">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-9 offset-lg-2 text-center">
+				<div class="hero-text">
+					<div class="hero-text-tablecell">
+						<p class="subtitle">Fresh & Tasty</p>
+						<h4 class="mt-5 text-light">Order and make payments</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="container">
     <div class="col-12 categories__text">
       <h1 class="h2">Payment Successful</h1>
@@ -27,7 +42,7 @@ Blenutishnet | Payment Successful
 <div class="row">
   <div class="col-lg-6 col-md-6 col-sm-6">
       <div class="cart__btn">
-          <!-- <a href="{% url 'frontend:product_all' %}">Continue Shopping</a> -->
+          <a href="{% url 'ProjectApp:myHome' %}">Continue Shopping</a>
       </div>
   </div>
  

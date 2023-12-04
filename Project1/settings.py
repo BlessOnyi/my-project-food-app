@@ -160,7 +160,7 @@ EMAIL_HOST_USER = 'onyinyechukwumblessing@gmail.com'
 EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
 
 LOGIN_URL = '/account/login/'
-# LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_REDIRECT_URL = '/account/dashboard'
 
 #Basket session ID
 BASKET_SESSION_ID = 'basket'
@@ -169,3 +169,6 @@ BASKET_SESSION_ID = 'basket'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# LOGIN_URL = 'account:login'

@@ -5,6 +5,22 @@ payment option
 {% endblock %}
 {% block content %}
 
+
+
+<div class="hero-area hero-img2">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-9 offset-lg-2 text-center">
+				<div class="hero-text">
+					<div class="hero-text-tablecell">
+						<p class="subtitle">Fresh & Tasty</p>
+						<h4 class="mt-5 text-light">Order and make payments</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="container ">
     <form id="payment-form">
         <h3 class="mb-3">Payment</h3>
@@ -13,21 +29,21 @@ payment option
         <div class="row g-3">
             <div class="col-sm-6">
                 <label for="firstName" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="fName" placeholder="" required>
+                <input type="text" class="form-control" id="fName" placeholder="{{request.user.first_name}}" required>
                 <div class="invalid-feedback">
                     Valid first name is required.
                 </div>
             </div>
             <div class="col-sm-6">
                 <label for="lastName" class="form-label">LastName</label>
-                <input type="text" class="form-control" id="lName" placeholder="" required>
+                <input type="text" class="form-control" id="lName" placeholder="{{request.user.last_name}}" rea>
                 <div class="invalid-feedback">
                     Valid lastname is required.
                 </div>
             </div>
             <div class="col-12">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                <input type="email" class="form-control" id="email" placeholder="{{request.user.email}}" readonly>
                 <div class="invalid-feedback">
                     Please enter a valid email address for shipping updates.
                 </div>
@@ -112,7 +128,7 @@ payment option
         email: '{{ user.email }}',
         amount: amount,
         currency: "NGN",
-        ref: 'PAYSTACK-' + Math.floor((Math.random() * 1000000000) + 1),
+        ref: 'BLENOURISHNET-' + Math.floor((Math.random() * 1000000000) + 1),
         metadata: {
             custom_fields: [
                 {
@@ -139,7 +155,7 @@ payment option
         },
         callback: function (response) {
             // handle successful payment here
-            var url = "{% url 'payment:payment_completed' %}"
+            var url = "{% url 'myPayment:payment_completed' %}"
             fetch(url, {
                 method: 'POST',
                 headers: {
@@ -150,7 +166,7 @@ payment option
                     reference: response.reference
                 })
             }).then(function () {
-                location.href = "{% url 'payment:payment_successful' %}";
+                location.href = "{% url 'myPayment:payment_successful' %}";
             })
         },
         onClose: function () {
@@ -175,62 +191,5 @@ payment option
         return cookieValue;
     }
 </script>
-<!--     
-    <script>
-      function payWithPaystack(){
-        var handler = PaystackPop.setup({
-          key: 'pk_test_db9118a0376eb304c98d8adc33eeabcec638dec0',
-          email: '{{ user.email }}',
-          amount: {{ basket.get_total_price | floatformat:2 }},
-          ref: 'PAYSTACK-' + Math.floor((Math.random() * 1000000000) + 1),
-          metadata: {
-             custom_fields: [
-                {
-                    display_name: "{{ product_name }}",
-                    variable_name: "product_name",
-                    value: "{{ product_name }}"
-                }
-             ]
-          },
-          callback: function(response){
-              var url = "{% url 'checkout:payment_completed' %}"
-              return fetch(url, {
-                  method: 'POST',
-                  headers: {
-                      'content-type': 'application/json',
-                      'X-CSRFToken': csrftoken,
-                  },
-                  body: JSON.stringify({
-                      reference: response.reference
-                  })
-              }).then(function () {
-                  location.href = "{% url 'checkout:payment_successful' %}";
-              })
-          },
-          onClose: function(){
-              alert('Payment cancelled by user');
-          }
-        });
-        handler.openIframe();
-      }
-      document.getElementById('paystack-button').addEventListener('click', function(e){
-          e.preventDefault();
-          payWithPaystack();
-      });
-      function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-      var cookies = document.cookie.split(';');
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim();
-        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue;
-  }
-    </script> -->
 
 {% endblock %}
