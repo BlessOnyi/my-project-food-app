@@ -13,8 +13,8 @@
 						<p class="subtitle">Fresh & Tasty for Consumers</p>
 						<h2 class="text-light">A food Niche for Foood Vendors</h2>
 						<div class="hero-btns">
-							<a href="menu.html" class="boxed-btn">Food Collection</a>
-							<a href="contact.html" class="bordered-btn">Contact Us</a>
+							<a href="#" class="boxed-btn">Food Collection</a>
+							<a href="{% url 'ProjectApp:mycontact' %}" class="bordered-btn">Contact Us</a>
 						</div>
 					</div>
 				</div>
@@ -25,10 +25,10 @@
 <!-- end hero area -->
 
 <!-- features list section -->
-<div class="list-section pt-80 pb-80" style="height: 30%;">
+<div class="list-section pt-80 pb-80" style="height: 35%;">
 	<div class="container">
 
-		<div class="row " style="margin-top: -70px;" >
+		<div class="row " style="margin-top: -70px;">
 			<div class="col-lg-4 col-sm-12 mb-4 mb-lg-0">
 				<div class="list-box d-flex align-items-center">
 					<div class="list-icon">
@@ -69,39 +69,40 @@
 
 <section class="food_section layout_padding-bottom">
 	<div class="container">
-	  <div class="heading_container heading_center">
-		<h1 class=" menu" style="margin-top: 10%;"><span class="orange-text">Our</span> Menu</h1>
-	  </div>
-	  <ul class="filters_menu">
-		<li class="active" data-filter="*">All</li>
-		{% for category in categories %}
-		<li data-filter=".{{ category.slug }}">{{ category.name }}</li>
-		{% endfor %}
-	  </ul>
-   <div class="filters-content">
-		<div class="row grid">
-		  {% for product in products %}
-		  <div class="col-sm-6 col-lg-4 all {{ product.category.slug }}">
-			<div class="box">
-			  <div>
-				<div class="img-box">
-				  <img src="{{ product.image.url }}" width="200" alt="{{ product.name|title }}">
-				</div>
-				<div class="detail-box">
-				  <h2 style="color: white;">{{ product.title }}</h2>
-				  <a href="{{product.get_absolute_url}}" class="btn border-btn">Place order</a>
-				  <h4 style="color:white; display: inline-block; float: right;">&#x20A6;{{product.price}}</h4>
-				  <!-- &rarr; -->
-				</div>
-			  </div>
-			</div>
-		  </div>
-		  {% endfor %}
+		<div class="heading_container heading_center">
+			<h1 class=" menu" style="margin-top: 10%;"><span class="orange-text">Our</span> Menu</h1>
 		</div>
-	  </div>
-	 
+		<ul class="filters_menu">
+			<li class="active" data-filter="*">All</li>
+			{% for category in categories %}
+			<li data-filter=".{{ category.slug }}">{{ category.name }}</li>
+			{% endfor %}
+		</ul>
+		<div class="filters-content">
+			<div class="row grid">
+				{% for product in products %}
+				<div class="col-sm-6 col-lg-4 all {{ product.category.slug }}">
+					<div class="box">
+						<div>
+							<div class="img-box">
+								<img src="{{ product.image.url }}" width="200" alt="{{ product.name|title }}">
+							</div>
+							<div class="detail-box">
+								<h2 style="color: white;">{{ product.title }}</h2>
+								<a href="{{product.get_absolute_url}}" class="btn border-btn">Place order</a>
+								<h4 style="color:white; display: inline-block; float: right;">&#x20A6;{{product.price}}
+								</h4>
+								<!-- &rarr; -->
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+
 	</div>
-  </section>
+</section>
 
 <!-- cart banner section -->
 <section class="cart-banner pt-100 pb-100">
@@ -109,7 +110,7 @@
 		<div class="row clearfix">
 			<!--Image Column-->
 			<div class="image-column col-lg-6">
-				<div class="image">
+				<!-- <div class="image">
 					<div class="price-box">
 						<div class="inner-price">
 							<span class="price">
@@ -118,33 +119,69 @@
 						</div>
 					</div>
 					<img src="{% static 'assets/img/FFr.jpg'%}" alt="">
+				</div> -->
+				<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+
+					<div class="carousel-inner">
+
+						<div class="carousel-item active">
+							<div class="price-box">
+								<div class="inner-price">
+									<span class="price">
+										<strong>5%</strong> <br> off per kg
+									</span>
+								</div>
+							</div>
+							<img src="{% static 'assets/img/FFr.jpg'%}" class="d-block w-70" alt="...">
+						</div>
+						<div class="carousel-item">
+							<div class="price-box">
+								<div class="inner-price">
+									<span class="price">
+										<strong>5%</strong> <br> off per kg
+									</span>
+								</div>
+							</div>
+							<img src="{% static 'assets/img/FFr.jpg'%}" class="d-block w-70" alt="...">
+						</div>
+						<div class="carousel-item">
+							<div class="price-box">
+								<div class="inner-price">
+									<span class="price">
+										<strong>5%</strong> <br> off per kg
+									</span>
+								</div>
+							</div>
+							<img src="{% static 'assets/img/FFr.jpg'%}" class="d-block w-70" alt="...">
+						</div>
+					</div>
 				</div>
 			</div>
 			<!--Content Column-->
 			<div class="content-column col-lg-6">
-				<h3><span class="orange-text">Deal</span> of the month</h3>
-				<h4>Hikan Strwaberry</h4>
-				<div class="text">Quisquam minus maiores repudiandae nobis, minima saepe id, fugit ullam similique!
-					Beatae, minima quisquam molestias facere ea. Perspiciatis unde omnis iste natus error sit voluptatem
-					accusant</div>
+				<h3><span class="orange-text">December</span>Deals</h3>
+				<h4>Spicy Foods</h4>
+				<div class="text">BleNourishNet awaits to delight your senses.
+					We invite you to experience our excellence in every dish we sell.
+					Make an order or drop by for an unforgettable taste.</div>
 				<!--Countdown Timer-->
 				<div class="time-counter">
-					<div class="time-countdown clearfix" data-countdown="2020/2/01">
+					<div class="time-countdown clearfix" data-countdown="2023/12/31">
 						<div class="counter-column">
-							<div class="inner"><span class="count">00</span>Days</div>
+							<div class="inner"><span class="count" max-data="31">00</span>Days</div>
 						</div>
 						<div class="counter-column">
-							<div class="inner"><span class="count">00</span>Hours</div>
+							<div class="inner"><span class="count" max-data="24">00</span>Hours</div>
 						</div>
 						<div class="counter-column">
-							<div class="inner"><span class="count">00</span>Mins</div>
+							<div class="inner"><span class="count" max-data="60">00</span>Mins</div>
 						</div>
 						<div class="counter-column">
-							<div class="inner"><span class="count">00</span>Secs</div>
+							<div class="inner"><span class="count"max-data="60">00</span>Secs</div>
 						</div>
 					</div>
 				</div>
-				<a href="{{product.get_absolute_url}}" class="btn btn-primary">Buy</a>
+				<a href="{{product.get_absolute_url}}" class="btn btn-primary">View and make your order</a>
 			</div>
 		</div>
 	</div>
@@ -154,7 +191,7 @@
 <!-- testimonail-section -->
 <div class="testimonail-section mt-150 mb-150">
 	<div class="container">
-		<h1 class="text-center mb-5"><span class="orange-text" > Meet</span> some our vendors</h1>
+		<h1 class="text-center mb-5"><span class="orange-text"> Meet</span> some our vendors</h1>
 		<div class="row">
 			<div class="col-lg-10 offset-lg-1 text-center">
 				<div class="testimonial-sliders">
@@ -213,32 +250,41 @@
 </div>
 <!-- end testimonail-section -->
 
-<!-- advertisement section -->
-<div class="abt-section mb-150">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-6 col-md-12">
-				<div class="abt-bg">
-					<a href="https://www.youtube.com/watch?v=DBLlFWYcIGQ" class="video-play-btn popup-youtube"><i
-							class="fas fa-play"></i></a>
-				</div>
-			</div>
-			<div class="col-lg-6 col-md-12">
-				<div class="abt-text">
-					<p class="top-sub">Since Year 1999</p>
-					<h2>We are <span class="orange-text">Fruitkha</span></h2>
-					<p>Etiam vulputate ut augue vel sodales. In sollicitudin neque et massa porttitor vestibulum ac vel
-						nisi. Vestibulum placerat eget dolor sit amet posuere. In ut dolor aliquet, aliquet sapien sed,
-						interdum velit. Nam eu molestie lorem.</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente facilis illo repellat
-						veritatis minus, et labore minima mollitia qui ducimus.</p>
-					<a href="about.html" class="boxed-btn mt-4">know more</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- end advertisement section -->
+<script>
+    // Function to update the counter based on scroll position
+    function updateCounter(entries, observer) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Increment the counter values based on your logic
+          updateCounters();
+          // Stop observing once the element is in the viewport
+          observer.unobserve(entry.target);
+        }
+      });
+    }
 
+    // Function to update the counter values
+    function updateCounters() {
+      const counters = document.querySelectorAll('.count');
+      counters.forEach(counter => {
+        const max = counter.dataset.max;
+        // Update the counter value based on your logic
+        // For example, you can use setInterval to increment the counter
+        let currentValue = 0;
+        const interval = setInterval(() => {
+          currentValue++;
+          counter.textContent = currentValue.toString().padStart(2, '0');
+          if (currentValue >= max) {
+            clearInterval(interval);
+          }
+        }, 1000); // Update every second (adjust as needed)
+      });
+    }
+
+    // Set up the Intersection Observer
+    const observer = new IntersectionObserver(updateCounter, { threshold: 0.5 });
+    const timeCountdown = document.querySelector('.time-countdown');
+    observer.observe(timeCountdown);
+</script>
 
 {% endblock %}

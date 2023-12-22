@@ -71,9 +71,12 @@ class Basket():
         if subtotal == 0:
             shipping = Decimal(0.00)
         else:
-            shipping = Decimal(1000.00)
+            shipping = Decimal(0.00)
+        # shipping = Decimal(1000.00) if subtotal > 0 else Decimal(0.00)
+
 
         total = subtotal + Decimal(shipping)
+        
         return total
 
     def delete(self, product):

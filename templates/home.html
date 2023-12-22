@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="hero-area hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 offset-lg-2 text-center">
+                <div class="hero-text">
+                    <div class="hero-text-tablecell">
+                        <p class="subtitle">Fresh & Tasty</p>
+                        <h1>Delicious {{ category.name }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="food_section layout_padding-bottom">
+
+    <div class="container">
+        <div class="row grid">
+            
+            <h3 class="text-center mt-5"><span style="color: orangered;">{{category.name}}</span> All Menu</h3>
+            
+            {% for product in products %}
+            <div class="col-sm-6 col-lg-4 all {{ product.category.category_slug }}">
+                <div class="box">
+                    <div>
+                        <div class="img-box">
+                            <img src="{{ product.image.url }}" width="200" alt="{{ product.name }}">
+                        </div>
+                        <div class="detail-box">
+                            <h2 style="color: white;">{{ product.title }}</h2>
+                            <a href="{{product.get_absolute_url}}" class="btn border-btn">Place order</a>
+                            <h4 style="color:white; display: inline-block; float: right;">&#x20A6;{{product.price}}</h4>
+                            <!-- &rarr; -->
+                          </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+</section>
+{% endblock %}
+<!-- end food section-->
+
+<!-- about

@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import views as auth_views
 
 # from django.db.models import Q
 
@@ -23,7 +24,7 @@ def myHome(request):
 
     # Check if a category is selected
     selected_category = request.GET.get('category')
-    searched = request.POST.get('searched')
+    searched = request.POST.get('q')
 
     if selected_category:
         # Filter food items by the selected category
@@ -34,6 +35,9 @@ def myHome(request):
        
     return render (request, 'index.html', {'products':products,'categories':categories})
 
+def product_all(request):
+    products = Products.objects.all()
+    return render(request, 'home.html', {'products': products})
 
 
 
@@ -60,6 +64,25 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
 
 
 
-# class PasswordResetConfirmView():
-   
-#    success_url = reverse_lazy("ProjectApp:password_reset_complete")
+# def password_reset_confirm(request, uidb64, token):
+    
+#     try:
+#         # Decode the uidb64 to get the user's ID
+#         user = auth_views.uidb64_decode(uidb64)
+
+#         response = auth_views.PasswordResetConfirmView.as_view(
+#             template_name='form/password_reset_confirm.html'
+#         )(request, uidb64=uidb64, token=token)
+
+#         if response.status_code == 200 and request.method == 'POST':
+#             messages.success(request, 'Password successfully reset.')
+#             return redirect('password_reset_complete')  # Replace with your actual success view name
+
+#         return response
+
+#     except Exception as e:
+#         # Handle any exceptions that may occur during the process
+#         messages.error(request, 'An error occurred during password reset.')
+#         return redirect('login')  # Replace with your actual error view name
+def mycontact(request):
+    return render(request,'contact.html')

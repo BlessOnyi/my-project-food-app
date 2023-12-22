@@ -52,6 +52,7 @@ def register_user(request):
                     mail_subject, message, to=[to_email]
                 )
                 email.send()
+                
                 return redirect('activation_sent')
             else:
                 print('User is None. Form data may be invalid.')
@@ -147,3 +148,16 @@ def edit_form(request):
         edit_form = EditUserForm(instance=request.user)
     return render(request, 'dashboard/edit-user-profile.html', {'edit_key':edit_form})
 
+
+
+def blog_form(request):
+    if request.method == 'POST':
+        blog_form = BlogForm(request.POST, request.FILES)
+        if blog_form.is_valid():
+            blog = blog_form.save(commit=False)
+            blog.user = request.user
+            blog.save()
+            messages.success(request, 'Blog Posted')
+    else:
+        blog_form = BlogForm()
+    return render(request, 'blog/add-blog.html', {'blog': blog_form})

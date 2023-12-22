@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 {% load static %}
 {% block title %}Home{% endblock %}
 {% block content %}
@@ -54,7 +54,7 @@
             <div class="checkboxes float-left" style="margin-left: 80px;">
                <!-- <a href=""><label class="container_check"style="color: black;">Forgetten password?</label></a> -->
             </div>
-            <div class="float-right mt-1"><a id="forgot" href="{% url 'ProjectApp:password_reset' %}">Forgot Password?</a></div>
+            <div class="float-right mt-1"><a id="forgot" href="{% url 'password_reset' %}">Forgot Password?</a></div>
         </div>
 
         <input type="submit" name="login" value="login" class="btn btn-danger btn-block btn_1 rounded full-width">

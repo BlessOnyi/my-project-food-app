@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm,PasswordChangeForm
 from django import forms
 from django.core import validators
+from blogApp.models import *
 
 
 class RegForm(UserCreationForm):
@@ -102,3 +103,23 @@ class EditUserForm(forms.ModelForm):
         if commit:
             user.save()
             return user
+        
+
+
+
+class BlogForm(forms.ModelForm):
+
+
+    class Meta():
+        exclude = ['user', 'created_on', 'updated_on']
+        model = Post
+
+        widgets={
+            'blog_title': forms.TextInput(attrs={'class': 'form-control'}),
+            'blog_content' : forms.Textarea(attrs={'class': 'form-control'}),
+            'blog_image': forms.FileInput(attrs={'class': 'form-control'}),
+           
+
+        }
+
+   
