@@ -66,26 +66,26 @@
 	</div>
 </div>
 
-
 <section class="food_section layout_padding-bottom">
 	<div class="container">
 		<div class="heading_container heading_center">
-			<h1 class=" menu" style="margin-top: 10%;"><span class="orange-text">Our</span> Menu</h1>
+			<h1 class="menu" style="margin-top: 10%;"><span class="orange-text">Our</span> Menu</h1>
 		</div>
 		<ul class="filters_menu">
-			<li class="active" data-filter="*">All</li>
+			<li class="active" data-filter="*" onclick="filterProducts(this)">All</li>
 			{% for category in categories %}
-			<li data-filter=".{{ category.slug }}">{{ category.name }}</li>
+			<li data-filter=".{{ category.slug }}" onclick="filterProducts(this)">{{ category.name }}</li>
 			{% endfor %}
 		</ul>
+
 		<div class="filters-content">
-			<div class="row grid">
+			<div class="row grid" id="product-container">
 				{% for product in products %}
-				<div class="col-sm-6 col-lg-4 all {{ product.category.slug }}">
+				<div class="col-md-3 col-sm-12 all {{ product.category.slug }}">
 					<div class="box">
 						<div>
 							<div class="img-box">
-								<img src="{{ product.image.url }}" width="200" alt="{{ product.name|title }}">
+								<img src="{{ product.image.url }}" width="200" alt="{{ product.title }}">
 							</div>
 							<div class="detail-box">
 								<h2 style="color: white;">{{ product.title }}</h2>
@@ -159,14 +159,16 @@
 			</div>
 			<!--Content Column-->
 			<div class="content-column col-lg-6">
-				<h3><span class="orange-text">December</span>Deals</h3>
+				<h3><span class="orange-text">January
+					
+				</span>Deals</h3>
 				<h4>Spicy Foods</h4>
 				<div class="text">BleNourishNet awaits to delight your senses.
 					We invite you to experience our excellence in every dish we sell.
 					Make an order or drop by for an unforgettable taste.</div>
 				<!--Countdown Timer-->
 				<div class="time-counter">
-					<div class="time-countdown clearfix" data-countdown="2023/12/31">
+					<div class="time-countdown clearfix" data-countdown="2024/01/31">
 						<div class="counter-column">
 							<div class="inner"><span class="count" max-data="31">00</span>Days</div>
 						</div>
@@ -177,11 +179,11 @@
 							<div class="inner"><span class="count" max-data="60">00</span>Mins</div>
 						</div>
 						<div class="counter-column">
-							<div class="inner"><span class="count"max-data="60">00</span>Secs</div>
+							<div class="inner"><span class="count" max-data="60">00</span>Secs</div>
 						</div>
 					</div>
 				</div>
-				<a href="{{product.get_absolute_url}}" class="btn btn-primary">View and make your order</a>
+				<a href="{% url 'ProjectApp:all product' %}" class="btn btn-primary">View and make your order</a>
 			</div>
 		</div>
 	</div>
@@ -216,7 +218,7 @@
 							<img src="{% static 'assets/img/avaters/avatar2.png'%}" alt="">
 						</div>
 						<div class="client-meta">
-							<h3>David Niph <span>Local shop owner</span></h3>
+							<h3>David Niph <span>Food Vendor</span></h3>
 							<p class="testimonial-body">
 								" Sed ut perspiciatis unde omnis iste natus error veritatis et quasi architecto beatae
 								vitae dict eaque ipsa quae ab illo inventore Sed ut perspiciatis unde omnis iste natus
@@ -229,10 +231,10 @@
 					</div>
 					<div class="single-testimonial-slider">
 						<div class="client-avater">
-							<img src="assets/img/avaters/avatar3.png" alt="">
+							<img src="{% static 'assets/img/avaters/onyi.jpg'%}" alt="">
 						</div>
 						<div class="client-meta">
-							<h3>Jacob Sikim <span>Local shop owner</span></h3>
+							<h3>Blessing O. <span>Local shop owner</span></h3>
 							<p class="testimonial-body">
 								" Sed ut perspiciatis unde omnis iste natus error veritatis et quasi architecto beatae
 								vitae dict eaque ipsa quae ab illo inventore Sed ut perspiciatis unde omnis iste natus
@@ -251,40 +253,78 @@
 <!-- end testimonail-section -->
 
 <script>
-    // Function to update the counter based on scroll position
-    function updateCounter(entries, observer) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Increment the counter values based on your logic
-          updateCounters();
-          // Stop observing once the element is in the viewport
-          observer.unobserve(entry.target);
-        }
-      });
-    }
+	// Function to update the counter based on scroll position
+	function updateCounter(entries, observer) {
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				// Increment the counter values based on your logic
+				updateCounters();
+				// Stop observing once the element is in the viewport
+				observer.unobserve(entry.target);
+			}
+		});
+	}
 
-    // Function to update the counter values
-    function updateCounters() {
-      const counters = document.querySelectorAll('.count');
-      counters.forEach(counter => {
-        const max = counter.dataset.max;
-        // Update the counter value based on your logic
-        // For example, you can use setInterval to increment the counter
-        let currentValue = 0;
-        const interval = setInterval(() => {
-          currentValue++;
-          counter.textContent = currentValue.toString().padStart(2, '0');
-          if (currentValue >= max) {
-            clearInterval(interval);
-          }
-        }, 1000); // Update every second (adjust as needed)
-      });
-    }
+	// Function to update the counter values
+	function updateCounters() {
+		const counters = document.querySelectorAll('.count');
+		counters.forEach(counter => {
+			const max = counter.dataset.max;
+			// Update the counter value based on your logic
+			// For example, you can use setInterval to increment the counter
+			let currentValue = 0;
+			const interval = setInterval(() => {
+				currentValue++;
+				counter.textContent = currentValue.toString().padStart(2, '0');
+				if (currentValue >= max) {
+					clearInterval(interval);
+				}
+			}, 1000); // Update every second (adjust as needed)
+		});
+	}
 
-    // Set up the Intersection Observer
-    const observer = new IntersectionObserver(updateCounter, { threshold: 0.5 });
-    const timeCountdown = document.querySelector('.time-countdown');
-    observer.observe(timeCountdown);
+	// Set up the Intersection Observer
+	const observer = new IntersectionObserver(updateCounter, { threshold: 0.5 });
+	const timeCountdown = document.querySelector('.time-countdown');
+	observer.observe(timeCountdown);
+
+
+
+	function filterProducts(category) {
+		const selectedCategory = category.getAttribute('data-filter');
+
+		// Remove 'active' class from all filter options
+		const filterOptions = document.querySelectorAll('.filters_menu li');
+		filterOptions.forEach(option => option.classList.remove('active'));
+
+		// Add 'active' class to the clicked filter option
+		category.classList.add('active');
+
+		// Display or hide products based on the selected category
+		const products = document.querySelectorAll('.grid .all');
+		products.forEach(product => {
+			const productCategories = product.classList;
+			if (selectedCategory === '*' || productCategories.contains(selectedCategory)) {
+				product.style.display = 'block';
+			} else if (selectedCategory === '.Igbo-dishes' && productCategories.contains('Igbo-dishes')) {
+				product.style.display = 'block';
+			} else if (selectedCategory === '.Yoruba-dishes' && productCategories.contains('Yoruba-dishes')) {
+				product.style.display = 'block';
+
+			} else if (selectedCategory === '.Foreign-dishes' && productCategories.contains('Foreign-dishes')) {
+				product.style.display = 'block';
+
+			} else if (selectedCategory === '.other-dishes' && productCategories.contains('other-dishes')) {
+				product.style.display = 'block';
+			}
+			else {
+				product.style.display = 'none';
+			}
+		});
+
+
+	}
+
 </script>
 
 {% endblock %}

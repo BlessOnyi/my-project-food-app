@@ -164,12 +164,20 @@
                         <button type="button" disabled class="btn btn-primary btn-lg btn-block">
                             Checkout securely
                         </button>
+                        {% elif not user.is_authenticated %}
+                        <!-- Redirect to login page if user is not authenticated -->
+                        <a href="{% url 'account:login' %}?next={% url 'myPayment:payment_completed' %}" class="primary-btn">
+                            <button type="button" class="btn btn-primary btn-lg btn-block">
+                                Login to Checkout
+                            </button>
+                        </a>
                         {% else %}
+                        <!-- Redirect to payment page if user is authenticated -->
                         <a href="{% url 'myPayment:payment_completed' %}" class="primary-btn">
-                        <button type="button " class="btn btn-primary btn-lg btn-block">
-                            Checkout securely
-                        </button>
-                         </a>
+                            <button type="button" class="btn btn-primary btn-lg btn-block">
+                                Checkout securely
+                            </button>
+                        </a>
                         {% endif %}
                        
                     </div>

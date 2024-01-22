@@ -87,7 +87,6 @@ def activate(request, uidb64, token):
     
 
     
-
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -96,11 +95,31 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect('account:dashboard_account')
+
+            # Check for 'next' parameter in the query string
+            next_url = request.GET.get('next')
+            if next_url:
+                return redirect(next_url)
+            else:
+                # If 'next' is not provided, redirect to the default dashboard_account
+                return redirect('account:dashboard_account')
         else:
             messages.error(request, 'Username and Password do not match')
+
     return render(request, 'forms/login.html')
 
+# def login_view(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         user = authenticate(request, username=username, password=password)
+
+#         if user is not None:
+#             login(request, user)
+#             return redirect('account:dashboard_account')
+#         else:
+#             messages.error(request, 'Username and Password do not match')
+#     return render(request, 'forms/login.html')
 
 def dashboard_account(request):
     

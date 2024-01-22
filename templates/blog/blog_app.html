@@ -5,26 +5,26 @@
 
 <!-- hero area -->
 <div class="hero-area hero">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-9 offset-lg-2 text-center">
-				<div class="hero-text">
-					<div class="hero-text-tablecell">
-						<p class="subtitle">Fresh & Tasty</p>
-						<h2 class="text-light">Delicious Seasoned Dishes</h2>
-						<div class="hero-btns">
-							<a href="menu.html" class="boxed-btn">Food Collection</a>
-							<a href="contact.html" class="bordered-btn">Contact Us</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 offset-lg-2 text-center">
+                <div class="hero-text">
+                    <div class="hero-text-tablecell">
+                        <p class="subtitle">Fresh & Tasty</p>
+                        <h2 class="text-light">Delicious Seasoned Dishes</h2>
+                        <div class="hero-btns">
+                            <a href="menu.html" class="boxed-btn">Food Collection</a>
+                            <a href="contact.html" class="bordered-btn">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- end hero area -->
 
-<header class="masthead">
+<!-- <header class="masthead">
     <div class="overlay"></div>
     <div class="container">
         <div class="row">
@@ -37,27 +37,40 @@
             </div>
         </div>
     </div>
-</header>
-<div class="mb-5"> <h2 class="text-center" style="font-size: 70px; color: rgb(0, 0, 0); font-weight: 900; font-family: 'Playfair Display', serif; margin-top: 50px;">Food blog</h2></div>
-<div class="container">
-    <div class="row">
-        <!-- Blog Entries Column -->
-        {% if post_list %}
-        {% for post in post_list %}
-        <div class="col-md-4 col-sm-12">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <img src="{{post.image.url}}" width="300" alt="">
-                    <a href="{% url 'blogApp:blogApp'  %}"><h2 class="card-title">{{ post.title }}</h2></a>
-                    <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on}} </p>
-                    <p class="card-text">{{post.content|truncatewords:7}}</p>
-                    <a href="{% url 'blogApp:blog_detail' post.slug  %}" class="btn btn-primary">Read More &rarr;</a>
+</header> -->
+
+<section class="food_section layout_padding-bottom">
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h1 class="menu" style="margin-top: 10%;"><span class="orange-text">Food</span> Chronicles</h1>
+        </div>
+
+        <div class="filters-content">
+            <div class="row grid" id="product-container">
+                {% if post_list %}
+                {% for post in post_list %}
+                <div class="col-md-3 col-sm-12 all">
+                    <div class="box">
+                        <div>
+                            <div class="img-box">
+                                <img src="{{ post.image.url }}" width="200" alt="{{ post.title }}">
+                            </div>
+                            <div class="detail-box">
+                                <h2 style="color: white;">{{ post.title }}</h2>
+                                <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on}} </p>
+                                <p class="card-text">{{post.content|truncatewords:7}}</p>
+                                <a href="{% url 'blogApp:blog_detail' post.slug  %}" class="btn btn-primary">Read More
+                                    &rarr;</a>
+                                <!-- &rarr; -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                {% endfor %}
+                {% endif %}
             </div>
         </div>
-        {% endfor %}
-        {% endif %}
-    </div>
-</div>
 
-{% endblock  %}
+    </div>
+</section>
+{% endblock %}

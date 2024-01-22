@@ -2031,6 +2031,10 @@ pre code {
   border: 0;
 }
 
+.input-box{
+  display: flex;
+}
+
 .form-control {
   display: block;
   width: auto;

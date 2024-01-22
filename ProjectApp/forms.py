@@ -5,6 +5,7 @@ from django.core import validators
 from blogApp.models import *
 
 
+
 class RegForm(UserCreationForm):
     username = forms.CharField(label='Username :', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': 'Enter Username'}))
@@ -122,4 +123,8 @@ class BlogForm(forms.ModelForm):
 
         }
 
-   
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('name','email','body')

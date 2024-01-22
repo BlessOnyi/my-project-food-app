@@ -21,22 +21,22 @@
 </style>
 <!-- hero area -->
 <div class="hero-area hero">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-9 offset-lg-2 text-center">
-				<div class="hero-text">
-					<div class="hero-text-tablecell">
-						<p class="subtitle">Fresh & Tasty</p>
-						<h2 class="text-light">Delicious Seasoned Dishes</h2>
-						<div class="hero-btns">
-							<a href="menu.html" class="boxed-btn">Food Collection</a>
-							<a href="contact.html" class="bordered-btn">Contact Us</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 offset-lg-2 text-center">
+                <div class="hero-text">
+                    <div class="hero-text-tablecell">
+                        <p class="subtitle">Fresh & Tasty</p>
+                        <h2 class="text-light">Delicious Seasoned Dishes</h2>
+                        <div class="hero-btns">
+                            <a href="menu.html" class="boxed-btn">Food Collection</a>
+                            <a href="contact.html" class="bordered-btn">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- end hero area -->
 
@@ -59,21 +59,74 @@
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-md-8 mt-3 left">
-            {% if blogDetail %}
-                <div class="card mb-4">
-                    <div class="card-body">
-                         <h2 class="card-title">{{blogDetail.title}}</h2>
-                         <p class="card-text text-muted h6">{{ blogDetail.author }} | {{ blogDetail.created_on}} </p>
-                         <div class="d-flex">
-                            <img src="{{blogDetail.image.url}}" width="300" alt="">
-                            <p class="card-text p-2">{{blogDetail.content}}</p>
-                          
-                         </div>
+            {% if post %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">{{post.title}}</h2>
+                    <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on}} </p>
+                    <div class="d-flex">
+                        <img src="{{post.image.url}}" width="300" alt="">
+                        <p class="card-text p-2">{{post.content}}</p>
                     </div>
                 </div>
+            </div>
+            <a href="" class="btn btn-primary">{{ comments.count }} &nbsp;Comment</a> <a href="" class="btn btn-primary">Like</a>
             {% endif %}
         </div>
-    
+        <div class="col-md-8 card mb-4  mt-3 ">
+            <div class="card-body">
+                <!-- comments -->
+                {% for comment in comments %}
+                <div class="comments" style="padding: 10px;">
+                    <p class="font-weight-bold">
+                        {{ comment.name }}
+                        <span class=" text-muted font-weight-normal">
+                            {{ comment.created_on }}
+                        </span>
+                    </p>
+                    {{ comment.body | linebreaks }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-8 card mb-4  mt-3 ">
+            <div class="card-body">
+                {% if new_comment %}
+                <div class="alert alert-success" role="alert">
+                    Your comment is awaiting moderation
+                </div>
+                {% else %}
+                <h3>Leave a comment</h3>
+                <form method="post" style="margin-top: 1.3em;">
+                    {{ comment_form.as_p }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+
     </div>
 </div>
 {%endblock%}
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Leave a comment</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" style="margin-top: 1.3em;">
+                {{ comment_form.as_p }}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="{% url 'account:logout_view' %}"><button type="button" class="btn btn-primary">logout</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
