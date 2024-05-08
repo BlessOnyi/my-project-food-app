@@ -170,5 +170,5 @@ BASKET_SESSION_ID = 'basket'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+AUTH_USER_MODEL = 'ProjectApp.CustomUser'
 # LOGIN_URL = 'account:login'

@@ -11,6 +11,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 from ProjectApp.forms import *
+from ProjectApp.models import *
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -22,12 +23,17 @@ from ProjectApp.forms import RegForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from .token import account_activation_token
-
-
-
+from ProjectApp.models import CustomUser
+from ProjectApp.models import Category
 from django.http import HttpResponseServerError
 
+
+
+
 def register_user(request):
+    # if request..is_authenticated:
+    #     return redirect('account:dashboard_account')
+    
     if request.method == 'POST':
         form = RegForm(request.POST)
         if form.is_valid():
@@ -74,8 +80,8 @@ def activation_sent_view(request):
 def activate(request, uidb64, token):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = CustomUser.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
@@ -89,20 +95,23 @@ def activate(request, uidb64, token):
     
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
+        email = request.POST.get('email')
         password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
-            login(request, user)
-
-            # Check for 'next' parameter in the query string
-            next_url = request.GET.get('next')
-            if next_url:
-                return redirect(next_url)
+            if user.is_vendor:
+                # Check if the user is a vendor
+                login(request, user)
+                return redirect('account:dashboard_account')  # Redirect to vendor dashboard
             else:
-                # If 'next' is not provided, redirect to the default dashboard_account
-                return redirect('account:dashboard_account')
+                # User is not a vendor, log in as a regular user
+                login(request, user)
+                next_url = request.GET.get('next')
+                if next_url:
+                    return redirect(next_url)
+                else:
+                    return redirect('account:dashboard_account')
         else:
             messages.error(request, 'Username and Password do not match')
 
@@ -122,8 +131,8 @@ def login_view(request):
 #     return render(request, 'forms/login.html')
 
 def dashboard_account(request):
-    
-    return render (request,'dashboard/index.html' )
+    foods = Products.objects.all()  # Assuming Products is your model for food items
+    return render(request, 'dashboard/index.html', {'foods': foods})
 
 
 
@@ -167,6 +176,13 @@ def edit_form(request):
         edit_form = EditUserForm(instance=request.user)
     return render(request, 'dashboard/edit-user-profile.html', {'edit_key':edit_form})
 
+@login_required
+def delete_user(request):
+    user = CustomUser.objects.get(user_name = request.user)
+    user.is_active = False
+    user.save()
+    logout(request)
+    return redirect('dashboard:delete_confirmation')
 
 
 def blog_form(request):
@@ -180,3 +196,70 @@ def blog_form(request):
     else:
         blog_form = BlogForm()
     return render(request, 'blog/add-blog.html', {'blog': blog_form})
+
+
+
+
+def add_food(request):
+    if request.method == 'POST':
+        food_form = FoodForm(request.POST, request.FILES)
+        if food_form.is_valid():
+            food = food_form.save(commit=False)
+            food.created_by = request.user
+            food.save()
+            messages.success(request, 'Food Added')
+            return redirect('dashboard')  # Redirect to a relevant page after successful form submission
+        else:
+            # Handle the case where the form is not valid
+            messages.error(request, 'Form is not valid. Please correct the errors.')
+    else:
+        food_form = FoodForm()
+    return render(request, 'dashboard/add-food.html', {'form': food_form})
+
+
+
+
+def show_food(request):
+    list_food = Products.objects.filter(created_by=request.user)
+    return render(request,'dashboard/view_list.html', {'list_food':list_food})
+
+
+def show_blog(request):
+    list_blog = Post.objects.order_by('-date')
+    # list_blog = Blog.objects.filter(user=request.user)
+    return render(request, 'dashboard/view-bloglist.html', {'list_blog':list_blog})
+
+
+
+def view_fooddetails(request, food_slug):
+    single_post = get_object_or_404(Products, slug=food_slug)
+    return render(request, 'dashboard/view-fooddetail.html', {'sipst':single_post})
+
+
+def delete_food(request, food_slug):
+    # Retrieve the food item to be deleted
+    food = get_object_or_404(Products, slug=food_slug)
+    food.delete()
+    messages.success(request, 'Food deleted successfully.')
+    return redirect('dashboard:show_food')  # Redirect to the dashboard or any other relevant page after deletion
+
+
+def view_blogdetails(request, blog_slug):
+    single_post = get_object_or_404(Products, slug=blog_slug)
+    return render(request, 'dashboard/view-blogdetail.html', {'sipst':single_post})
+
+    
+def delete_blog(request, blog_slug):
+    # Retrieve the food item to be deleted
+    blog = get_object_or_404(Post, slug=blog_slug)
+    blog.delete()
+    messages.success(request, 'Blog has been deleted successfully.')
+    return redirect('dashboard:show_blog')  # Redirect to the dashboard or any other relevant page after deletion
+    
+    
+
+
+  
+
+
+ 

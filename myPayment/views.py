@@ -18,6 +18,7 @@ def payment_completed(request):
 
     # Verify the transaction with Paystack
     headers = {'Authorization': 'Bearer {{sk_test_efea5c7d713b390d867c1d6bd4575b7160a72184 }}'}
+    
     response = requests.get('https://api.paystack.co/transaction/verify/' , reference, headers=headers)
 
     # Get the transaction data from the response

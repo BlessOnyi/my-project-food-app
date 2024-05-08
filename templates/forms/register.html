@@ -55,7 +55,7 @@
             {% endif %} -->
             <div class="form-group first">
               <label for="username">Username</label>
-              {{reg_form.username}}
+              {{reg_form.user_name}}
             </div>
             <div class="form-group first">
               <label for="first_name">Firstname</label>
@@ -63,13 +63,29 @@
             </div>
             <div class="form-group first">
               <label for="last_name">Lastname</label>
-              {{reg_form.last_name}}
+              {{reg_form.last_name}} 
             </div>
             <div class="form-group first">
               <label for="email">Email</label>
               {{reg_form.email}}
 
             </div>
+            <div class="form-group first">
+              <label for="gender">Gender</label>
+              {{reg_form.gender}}
+
+            </div>
+            <div class="form-group first">
+              <label for="gender">phone_number</label>
+              {{reg_form.phone_number}}
+
+            </div>
+            <div class="form-group first">
+              <label for="email">Register As:</label>
+              {{reg_form.user_type}}
+
+            </div>
+
             <div class="form-group last mb-3">
               <label for="password">Password</label>
               {{reg_form.password1}}

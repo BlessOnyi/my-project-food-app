@@ -21,7 +21,7 @@
                 <div class="card">
 
                     <div class="card-body">
-                        <h3 class="card-title">Profile Details</h3>
+                        <h3 class="card-title"> View Profile Details</h3>
 
                         <form action="#" class="forms-sample">
 
@@ -44,7 +44,8 @@
                                 <label for="exampleInputName1">Email</label>
                                 <input type="text" class="form-control" placeholder="{{request.user.email}}" readonly>
                             </div>
-                            <a href="{% url 'account:edit_form' %}"><button type="submit" class="btn btn-primary mr-2">Edit</button></a>
+                            <button type="submit" class="btn btn-primary mr-2">Save</button>
+                            <!-- <a href="{% url 'account:edit_form' %}"><button type="submit" class="btn btn-primary mr-2">Edit</button></a> -->
 
                         </form>
                     </div>

@@ -13,7 +13,7 @@
           <div class="card">
   
             <div class="card-body">
-              <h3 class="card-title">Change Password</h3>
+              <h3 class="card-title">Edit Profile</h3>
               {% if messages %}
               {% for mes in messages %}
               <div class="alert {{ mes.tags }}">{{ mes }}</div>
@@ -37,7 +37,8 @@
                   <label for="exampleInputName1">Email</label>
                   {{edit_key.email}}
                 </div>
-                <button type="submit" class="btn btn-primary mr-2">Edit</button>
+                
+                <a href="{% url 'account:edit_form' %}"><button type="submit" class="btn btn-primary mr-2">Edit</button></a>
 
               </form>
             </div>

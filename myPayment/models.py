@@ -8,7 +8,7 @@
 
 # # Create your models here.
 # class UserWallet(models.Model):
-#     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+#     user = models.OneToOneField(CustomUser, null=True, on_delete=models.CASCADE)
 #     currency = models.CharField(max_length=50, default='NGN')
 #     created_at = models.DateTimeField(default=timezone.now, null=True)
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User 
+from ProjectApp.models import *
 
 
 # Create your models here.
@@ -12,7 +13,7 @@ class Post(models.Model):
      title = models.CharField(max_length=300, verbose_name=None, unique=True)
      image = models.ImageField(upload_to='media/')
      slug = models.SlugField(max_length=300, unique=True)
-     author = models.ForeignKey(User, on_delete=models.CASCADE)
+     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
      updated_on = models.DateTimeField(auto_now = True)
      content = models.TextField()
      created_on = models.DateTimeField(auto_now_add=True)

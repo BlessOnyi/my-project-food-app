@@ -1,0 +1,58 @@
+{% extends '../dashboard/account_base.html' %}
+{% load static %}
+{% block title %}View Food{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">View Food</li>
+      </ol>
+		<div class="box_general padding_bottom">
+			<div class="header_box version_2">
+                <div class="row">
+                    <h2>View Food</h2>
+                        <table class="table table-bordered">
+                            <tr>
+                            <th>S/N</th>
+                            <th>food Title</th>
+                            <th>Food Image</th>
+                            <th>Posted By</th>
+                            <th colspan="3">Action</th>
+                            </tr>
+                
+                            {% if list_food %}
+                            {% for list in list_food %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ list.title }}</td>
+                                    <!-- <td>{{ l.blg_content|truncatewords:30 }}</td> -->
+                                    <td><img src="{{ list.img }}" width="50" height="50" alt=""></td>
+                                    <td>{{list.date}}</td>
+                                    <td>{{ list.vendor.username }}</td>
+                                    <!-- <td>
+                                        {% for c in l.cat_id.all %}
+                                            {{ c.cat.cat_name}}
+                                        {% endfor %}
+                                    </td> -->
+                                    <td>
+                                        <a href="{% url 'account:edit_food' list.slug %}">Edit</a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'account:view_fooddetails' list.slug %}">View</a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'account:delete_food' list.slug %}">Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            {% endif %}    
+                        </table>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
